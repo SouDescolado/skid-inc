@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "commit": "yarn lint && git-cz",
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve --open"
   },
   "dependencies": {
     "modern-normalize": "^0.4.0",
@@ -17,6 +18,8 @@
     "@vue/cli-plugin-babel": "^3.0.0-beta.6",
     "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "lint-staged": "^6.0.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
@@ -49,5 +52,10 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
