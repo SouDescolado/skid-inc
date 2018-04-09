@@ -1,18 +1,52 @@
 {
   "name": "skid-inc",
-  "version": "0.0.0",
-  "description": "Idle-game with hacking theme.",
-  "dependencies": {
-    "http-server": "^0.9.0"
-  },
-  "devDependencies": {},
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "http-server ."
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TotomInc/skid-inc"
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^6.0.0"
   },
-  "author": "TotomInc <cazade.thomas@gmail.com>",
-  "license": "MIT"
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
+    "@vue/cli-service": "^3.0.0-beta.6",
+    "lint-staged": "^6.0.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
 }
