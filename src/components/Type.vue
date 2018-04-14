@@ -1,7 +1,7 @@
 <template>
-  <div id="type">
+  <div id="type" @click="focus()">
     <p class="type-prefix">user@skid-inc ></p>
-    <input type="text" class="type-input">
+    <input v-model="command" type="text" class="type-input">
   </div>
 </template>
 
@@ -10,8 +10,17 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class Type extends Vue {
+  public command: string;
+
   constructor() {
     super();
+    this.command = '';
+  }
+
+  /** Focus the input when clicking on the `#type` div-container. */
+  public focus(): void {
+    const input = this.$el.getElementsByTagName('input')[0];
+    input.focus();
   }
 }
 </script>
