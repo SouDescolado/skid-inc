@@ -9,6 +9,8 @@
       <div class="terminal-input">
         <type></type>
       </div>
+
+      <div class="terminal-logo"></div>
     </div>
   </div>
 </template>
@@ -43,11 +45,24 @@ export default class App extends Vue {
   color: #f1f1f1;
   background-color: #3b3e44;
 
+  .terminal-logo {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(./assets/logo.png) center center no-repeat;
+    opacity: .075;
+  }
+
   .terminal-grid {
+    z-index: 1;
     display: flex;
   }
 
   .terminal-input {
+    z-index: 1;
     position: absolute;
     left: 0;
     right: 0;
