@@ -33,6 +33,7 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400,500,700');
 @import '~modern-normalize/modern-normalize.css';
 
 .terminal {
@@ -41,7 +42,7 @@ export default class App extends Vue {
   left: 0;
   right: 0;
   bottom: 0;
-  font-family: 'Menlo';
+  font-family: 'IBM Plex Mono', 'Menlo', 'Consolas', 'Ubuntu Mono', monospace;
   color: #f1f1f1;
   background-color: #3b3e44;
 
