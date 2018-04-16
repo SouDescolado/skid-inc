@@ -75,44 +75,5 @@ export default class App extends Vue {
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400,500,700');
 @import '~modern-normalize/modern-normalize.css';
 
-@import './styles/_variables.scss';
-
-.terminal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-family: 'IBM Plex Mono', 'Menlo', 'Consolas', 'Ubuntu Mono', monospace;
-  color: #f1f1f1;
-  background-color: #3b3e44;
-
-  .terminal-logo {
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url(./assets/logo.png) center center no-repeat;
-    opacity: .075;
-  }
-
-  .terminal-grid {
-    z-index: 1;
-    display: flex;
-    height: calc(100% - #{$input-height});
-    width: 100%;
-  }
-
-  .terminal-input {
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 55px;
-    width: 100%;
-  }
-}
+@import './styles/skid-inc.scss';
 </style>

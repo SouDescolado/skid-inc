@@ -13,11 +13,4 @@ export default class Logs extends Vue {
 }
 </script>
 
-<style lang="scss">
-@import '../styles/_variables.scss';
-
-#logs {
-  flex: 1 1 auto;
-  width: $logs-width;
-}
-</style>
+<style lang="scss"></style>

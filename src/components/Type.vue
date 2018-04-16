@@ -59,32 +59,4 @@ export default class Type extends Vue {
 }
 </script>
 
-<style lang="scss">
-#type {
-  display: flex;
-  padding: 16px;
-  cursor: pointer;
-
-  .type-prefix {
-    padding: 0;
-    margin: 0 8px 0 0;
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .type-input {
-    flex: 1 1 auto;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-size: 1.25rem;
-    color: inherit;
-    background-color: transparent;
-    cursor: pointer;
-
-    &:focus {
-      outline: 0;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
