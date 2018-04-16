@@ -1,7 +1,10 @@
 import * as Models from '../../models';
 
 export interface CommandsState {
+  /** List of commands */
   commands: Models.Command[];
+  /** History of commands sent */
+  history: string[];
 }
 
 export const state: CommandsState = {
@@ -11,4 +14,6 @@ export const state: CommandsState = {
       desc: 'print a list of all available commands',
     },
   ],
+
+  history: [''],
 };

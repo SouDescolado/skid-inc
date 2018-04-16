@@ -1,7 +1,7 @@
 <template>
   <div id="type" @click="focus()">
     <p class="type-prefix">user@skid-inc ></p>
-    <input v-model="command" type="text" class="type-input">
+    <input v-model="command" type="text" class="type-input" v-on:keyup.enter="submitCommand()">
   </div>
 </template>
 
@@ -19,8 +19,16 @@ export default class Type extends Vue {
 
   /** Focus the input when clicking on the `#type` div-container. */
   public focus(): void {
-    const input = this.$el.getElementsByTagName('input')[0];
+    const input: HTMLInputElement = this.$el.getElementsByTagName('input')[0];
     input.focus();
+  }
+
+  /** On-enter: trim and slice the command, commit it to the store */
+  public submitCommand(): void {
+    const cmd: string[] = this.command.replace(/ +(?= )/g, '').trim().split(' ');
+
+    this.$store.commit('submitCommand', cmd);
+    this.command = '';
   }
 }
 </script>
