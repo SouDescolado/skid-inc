@@ -5,6 +5,7 @@
       v-on:keyup.enter="submitCommand()"
       v-on:keyup.38="browseCommandHistory('up')"
       v-on:keyup.40="browseCommandHistory('down')"
+      v-on:keyup.ctrl.75="clearToCaret($event)"
     />
   </div>
 </template>
@@ -47,6 +48,13 @@ export default class Type extends Vue {
     this.$store.commit('browseCommandHistory', direction);
 
     this.command = this.$store.getters.getCommandHistory;
+  }
+
+  /** Clear the command from the end to the caret position */
+  public clearToCaret(event: KeyboardEvent): void {
+    const caretPosition: number = event.target.selectionStart;
+
+    this.command = this.command.substr(0, caretPosition);
   }
 }
 </script>
