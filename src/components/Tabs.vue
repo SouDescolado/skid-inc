@@ -13,4 +13,10 @@ export default class Tabs extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../styles/_variables.scss';
+
+#tabs {
+  width: $tabs-width;
+}
+</style>

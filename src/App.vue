@@ -36,6 +36,8 @@ export default class App extends Vue {
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400,500,700');
 @import '~modern-normalize/modern-normalize.css';
 
+@import './styles/_variables.scss';
+
 .terminal {
   position: absolute;
   top: 0;
@@ -60,6 +62,8 @@ export default class App extends Vue {
   .terminal-grid {
     z-index: 1;
     display: flex;
+    height: calc(100% - #{$input-height});
+    width: 100%;
   }
 
   .terminal-input {
@@ -68,6 +72,8 @@ export default class App extends Vue {
     left: 0;
     right: 0;
     bottom: 0;
+    height: 55px;
+    width: 100%;
   }
 }
 </style>
