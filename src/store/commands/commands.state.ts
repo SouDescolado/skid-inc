@@ -5,6 +5,8 @@ export interface CommandsState {
   commands: Models.Command[];
   /** History of commands sent */
   history: string[];
+  /** Current index in the command history, `-1` for empty string */
+  historyIndex: number;
 }
 
 export const state: CommandsState = {
@@ -16,4 +18,5 @@ export const state: CommandsState = {
   ],
 
   history: [''],
+  historyIndex: -1,
 };

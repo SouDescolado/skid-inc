@@ -1,7 +1,11 @@
 <template>
   <div id="type" @click="focus()">
     <p class="type-prefix">user@skid-inc ></p>
-    <input v-model="command" type="text" class="type-input" v-on:keyup.enter="submitCommand()">
+    <input v-model="command" type="text" class="type-input"
+      v-on:keyup.enter="submitCommand()"
+      v-on:keyup.38="browseCommandHistory('up')"
+      v-on:keyup.40="browseCommandHistory('down')"
+    />
   </div>
 </template>
 
@@ -14,13 +18,19 @@ export default class Type extends Vue {
 
   constructor() {
     super();
+
     this.command = '';
   }
 
   /** Focus the input when clicking on the `#type` div-container. */
   public focus(): void {
     const input: HTMLInputElement = this.$el.getElementsByTagName('input')[0];
+
     input.focus();
+  }
+
+  get commandHistory(): string {
+    return this.$store.getters.getCommandHistory;
   }
 
   /** On-enter: trim and slice the command, commit it to the store */
@@ -28,7 +38,15 @@ export default class Type extends Vue {
     const cmd: string[] = this.command.replace(/ +(?= )/g, '').trim().split(' ');
 
     this.$store.commit('submitCommand', cmd);
+
     this.command = '';
+  }
+
+  /** Navigate through the command history: `up` or `down` */
+  public browseCommandHistory(direction: 'up' | 'down'): void {
+    this.$store.commit('browseCommandHistory', direction);
+
+    this.command = this.$store.getters.getCommandHistory;
   }
 }
 </script>
