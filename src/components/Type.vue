@@ -23,6 +23,11 @@ export default class Type extends Vue {
     this.command = '';
   }
 
+  /** Computed property listen for `getCommandHistory` from `$store` */
+  get commandHistory(): string {
+    return this.$store.getters.getCommandHistory;
+  }
+
   /** Focus the input when clicking on the `#type` div-container. */
   public focus(): void {
     const input: HTMLInputElement = this.$el.getElementsByTagName('input')[0];
@@ -30,17 +35,16 @@ export default class Type extends Vue {
     input.focus();
   }
 
-  get commandHistory(): string {
-    return this.$store.getters.getCommandHistory;
-  }
-
   /** On-enter: trim and slice the command, commit it to the store */
   public submitCommand(): void {
     const cmd: string[] = this.command.replace(/ +(?= )/g, '').trim().split(' ');
 
-    this.$store.commit('submitCommand', cmd);
+    /* Avoid submit empty commands */
+    if (cmd.length > 0 && cmd[0].length > 0) {
+      this.$store.commit('submitCommand', cmd);
 
-    this.command = '';
+      this.command = '';
+    }
   }
 
   /** Navigate through the command history: `up` or `down` */
