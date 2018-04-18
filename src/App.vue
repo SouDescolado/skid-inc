@@ -26,16 +26,16 @@ import Type from './components/Type.vue';
   components: { Logs, Tabs, Type },
 })
 export default class App extends Vue {
-  /** 1000/fps */
+  /** The interval between execution times of the core-loop `1000 / fps` */
   private interval: number;
+  /** Frames-per-seconds, used in the interval */
+  private fps: number;
+  /** Core-loop interval reference */
+  private loopRef: number;
   /** Last loop execution time, in ms */
   private before: number;
   /** Current loop time, in ms */
   private now: number;
-  /** Frames-per-seconds, used in the interval */
-  private fps: number;
-  /** Core `loop` function reference */
-  private loop: number;
 
   constructor() {
     super();
@@ -45,11 +45,12 @@ export default class App extends Vue {
 
     this.fps = 30;
     this.interval = 1000 / this.fps;
+    this.loopRef = 0;
   }
 
   /** On game mounted, start the core-game loop */
   public mounted(): void {
-    this.interval = window.setInterval(() => this.loop(), this.interval);
+    this.loopRef = window.setInterval(() => this.loop(), this.interval);
   }
 
   /** Core game loop */
