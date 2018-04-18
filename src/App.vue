@@ -75,6 +75,7 @@ export default class App extends Vue {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400,500,700');
 @import '~modern-normalize/modern-normalize.css';
+@import '~font-awesome/css/font-awesome.css';
 
 @import './styles/skid-inc.scss';
 </style>
