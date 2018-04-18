@@ -52,6 +52,11 @@ export default class Type extends Vue {
 
   /** Clear the command from the end to the caret position */
   public clearToCaret(event: KeyboardEvent): void {
+    if (event === null || event.target === null) {
+      return;
+    }
+
+    // @ts-ignore - event.target is not an HTMLInputElement
     const caretPosition: number = event.target.selectionStart;
 
     this.command = this.command.substr(0, caretPosition);
