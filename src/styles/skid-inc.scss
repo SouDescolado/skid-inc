@@ -1,5 +1,9 @@
 @import 'variables';
 
+// Import custom modules styling
+@import 'modules/vue-tabs-component';
+
+// Core skid-inc styling
 @import 'core';
 @import 'type';
 @import 'logs';
