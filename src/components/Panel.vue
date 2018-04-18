@@ -1,12 +1,12 @@
 <template>
-  <div id="tabs"></div>
+  <div id="panel"></div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class Tabs extends Vue {
+export default class Panel extends Vue {
   constructor() {
     super();
   }

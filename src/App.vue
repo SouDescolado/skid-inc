@@ -3,7 +3,7 @@
     <div class="terminal">
       <div class="terminal-grid">
         <logs></logs>
-        <tabs></tabs>
+        <panel></panel>
       </div>
 
       <div class="terminal-input">
@@ -19,11 +19,11 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import Logs from './components/Logs.vue';
-import Tabs from './components/Tabs.vue';
+import Panel from './components/Panel.vue';
 import Type from './components/Type.vue';
 
 @Component({
-  components: { Logs, Tabs, Type },
+  components: { Logs, Panel, Type },
 })
 export default class App extends Vue {
   /** The interval between execution times of the core-loop `1000 / fps` */
