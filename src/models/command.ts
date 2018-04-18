@@ -6,7 +6,7 @@ export interface Command {
   /** If support specific arguments */
   args?: boolean;
   /** If support arguments, set a specific type of arguments that can be passed */
-  argsType?: Array<string | number>;
+  argsType?: string[];
   /** Support the `--list` or `-l` argument */
   list?: boolean;
   /** Support the `--help` or `-h` argument */
