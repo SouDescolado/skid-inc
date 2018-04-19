@@ -20,12 +20,12 @@ interface CommandStatus {
 /** Generate correct errors depending of the command executed */
 export const generateCommandStatus = (command: Models.Command): CommandStatus => {
   return {
-    HELP_NOT_SUPPORTED: `${command.root} command doesn't support -h or --help`,
-    LIST_NOT_SUPPORTED: `${command.root} command doesn't support -l or --list`,
-    ARGUMENTS_NOT_REQUIRED: `${command.root} command doesn't need any arguments, try to remove them`,
-    ARGUMENTS_REQUIRED: `${command.root} command require arguments`,
-    TOO_MUCH_ARGUMENTS: `too much arguments, try ${command.root} -h or ${command.root} -l`,
-    INVALID_ARGUMENTS: `some arguments are invalid, try ${command.root} -h or ${command.root} -l`,
+    HELP_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-h</span> or <span class="sub">--help</span> arguments`,
+    LIST_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-l</span> or <span class="sub">--list</span> arguments`,
+    ARGUMENTS_NOT_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't need any arguments, try to remove them`,
+    ARGUMENTS_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command require arguments`,
+    TOO_MUCH_ARGUMENTS: `<span class="error">error</span> too much arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
+    INVALID_ARGUMENTS: `<span class="error">error</span> some arguments are invalid, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
   };
 };
 
