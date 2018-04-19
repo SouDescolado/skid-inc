@@ -21,6 +21,12 @@ export default class Logs extends Vue {
 
         this.$el.appendChild(log);
       }
+
+      if (mutation.type === 'clearLog') {
+        while (this.$el.firstChild) {
+          this.$el.removeChild(this.$el.firstChild);
+        }
+      }
     });
   }
 

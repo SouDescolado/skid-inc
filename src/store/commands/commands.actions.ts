@@ -30,13 +30,19 @@ export const actions = {
     }
   },
 
+  /** Print a list of all available commands */
   async COMMAND_HELP(context: CommandContext, input: string[]) {
     let help = `For more information about a command, type <span class="sub">command-name --help</span>:<br><br>`;
 
     context.state.commands.forEach((command) => {
-      help += `<span class="sub">${command.root}</span>: ${command.desc}`;
+      help += `<span class="sub">${command.root}</span>: ${command.desc}<br>`;
     });
 
     context.dispatch('LOGS_PRINT', help);
+  },
+
+  /** Clear console output */
+  async COMMAND_CLEAR(context: CommandContext) {
+    context.dispatch('LOGS_CLEAR');
   },
 };

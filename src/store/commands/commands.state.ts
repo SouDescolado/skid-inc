@@ -16,6 +16,11 @@ export const state: CommandsState = {
       desc: 'print a list of all available commands',
       payload: 'COMMAND_HELP',
     },
+    {
+      root: 'clear',
+      desc: 'clear the console output',
+      payload: 'COMMAND_CLEAR',
+    },
   ],
 
   history: [''],
