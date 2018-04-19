@@ -1,7 +1,5 @@
 <template>
-  <div id="logs">
-    <p class="log" v-for="log in logs">{{log}}</p>
-  </div>
+  <div id="logs"></div>
 </template>
 
 <script lang="ts">
@@ -12,6 +10,18 @@ import { MutationPayload } from 'vuex';
 export default class Logs extends Vue {
   constructor() {
     super();
+  }
+
+  public mounted(): void {
+    this.$store.subscribe((mutation: MutationPayload) => {
+      if (mutation.type === 'printLog') {
+        const log = document.createElement('div');
+        log.setAttribute('class', 'log');
+        log.innerHTML = mutation.payload;
+
+        this.$el.appendChild(log);
+      }
+    });
   }
 
   get logs(): string[] {

@@ -20,13 +20,23 @@ export const actions = {
 
     if (cmd && cmdCheck) {
       if (cmdCheck.valid) {
-        // context.dispatch('COMMAND_PAYLOAD', cmdCheck.payload);
+        context.dispatch(cmdCheck.command.payload, command);
       } else {
         context.dispatch('LOGS_PRINT', cmdCheck.error);
       }
     } else {
-      const error = `can't find ${root} command, try help for a list of commands`;
+      const error = `<span class="error">error</span> can't find ${root} command, try <span class="sub">help</span> for a list of commands`;
       context.dispatch('LOGS_PRINT', error);
     }
+  },
+
+  async COMMAND_HELP(context: CommandContext, input: string[]) {
+    let help = `For more information about a command, type <span class="sub">command-name --help</span>:<br><br>`;
+
+    context.state.commands.forEach((command) => {
+      help += `<span class="sub">${command.root}</span>: ${command.desc}`;
+    });
+
+    context.dispatch('LOGS_PRINT', help);
   },
 };

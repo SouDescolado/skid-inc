@@ -14,7 +14,7 @@ export const state: CommandsState = {
     {
       root: 'help',
       desc: 'print a list of all available commands',
-      payload: 'printHelp',
+      payload: 'COMMAND_HELP',
     },
   ],
 
