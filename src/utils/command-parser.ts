@@ -6,7 +6,7 @@ export interface CheckCommandArgs {
   command: Models.Command;
   /** User-input entered to find the command, processed as ['hello', 'world'] */
   input: string[];
-  /** If command not found, return an error string ready to be printed in the logs */
+  /** If command is invalid, return an error string ready to be printed in the logs */
   error: string;
   /** Check if the command is valid and can be executed based on the input */
   valid: boolean;
