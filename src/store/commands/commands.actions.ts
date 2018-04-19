@@ -17,6 +17,8 @@ export const actions = {
 
     /* Submit the command to the command history */
     context.commit('submitCommandHistory', command);
+    /* Display the command entered */
+    context.dispatch('LOGS_PRINT', `> <span class="sub">${command.join(' ')}</span>`);
 
     if (cmd && cmdCheck) {
       if (cmdCheck.valid) {
