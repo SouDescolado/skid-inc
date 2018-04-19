@@ -41,7 +41,7 @@ export default class Type extends Vue {
 
     /* Avoid submit empty commands */
     if (cmd.length > 0 && cmd[0].length > 0) {
-      this.$store.commit('submitCommand', cmd);
+      this.$store.dispatch('COMMAND_SUBMIT', cmd);
 
       this.command = '';
     }
