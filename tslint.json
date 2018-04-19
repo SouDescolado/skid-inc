@@ -9,6 +9,7 @@
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
+    "max-line-length": [true, { "ignore-pattern": "string" }],
     "no-consecutive-blank-lines": false
   }
 }
