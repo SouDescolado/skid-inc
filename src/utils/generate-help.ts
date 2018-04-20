@@ -28,18 +28,12 @@ const maxRootLength = (commands: Models.Command[]): number => {
 
 /** Generate the appropriate number of spaces for a perfect alignment/table of commands */
 const generateSpaces = (root: string, maxLength: number): string => {
-  const numOfSpaces = maxLength - root.length - 1;
-  let spaces = '';
+  const spaces = maxLength - root.length;
+  let str = '';
 
-  if (numOfSpaces > 0) {
-    for (let i = 0; i < numOfSpaces; i++) {
-      spaces += '&nbsp;';
-    }
-  } else if (numOfSpaces === 0) {
-    spaces = '&nbsp;&nbsp;';
-  } else {
-    spaces = '&nbsp;';
+  for (let i = 0; i <= spaces; i++) {
+    str += '&nbsp;';
   }
 
-  return spaces;
+  return str;
 };
