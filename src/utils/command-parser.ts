@@ -25,7 +25,10 @@ export const generateCommandStatus = (command: Models.Command): CommandStatus =>
     ARGUMENTS_NOT_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't need any arguments, try to remove them`,
     ARGUMENTS_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command require arguments`,
     TOO_MUCH_ARGUMENTS: `<span class="error">error</span> too much arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
+    MISSING_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>` ,
     INVALID_ARGUMENTS: `<span class="error">error</span> some arguments are invalid, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
+    INVALID_STRING_ARGUMENT: `<span class="error">error</span> expected a string argument and instead got a number, check your command`,
+    INVALID_NUMBER_ARGUMENT: `<span class="error">error</span> expected a number argument and instead got a string, check your command`,
   };
 };
 
@@ -66,9 +69,27 @@ export const checkCommandArgs = (command: Models.Command, input: string[]): Chec
     return { command, input, error, valid };
   }
 
+  /* If user entered too few arguments */
+  if (command.args && command.argsType && args.length < command.argsType.length) {
+    error = types.MISSING_ARGUMENTS;
+    return { command, input, error, valid };
+  }
+
   /* If arguments types doesn't match */
-  if (command.args && command.argsType && command.argsType.every((type, i) => type === typeof args[i])) {
-    error = types.INVALID_ARGUMENTS;
+  if (command.args && command.argsType && args.length === command.argsType.length) {
+    /* `args[i]` parsed and check its type: `isNaN` allow us to know if it's a string or number */
+    command.argsType.forEach((type, i) => {
+      if (type === 'number' && args[i] && isNaN(parseInt(args[i], 10))) {
+        error = types.INVALID_NUMBER_ARGUMENT;
+        return;
+      }
+
+      if (type === 'string' && args[i] && !isNaN(parseInt(args[i], 10))) {
+        error = types.INVALID_STRING_ARGUMENT;
+        return;
+      }
+    });
+
     return { command, input, error, valid };
   }
 
