@@ -8,4 +8,8 @@ import { PlayerState } from './player.state';
 
 type PlayerContext = ActionContext<PlayerState, RootState>;
 
-export const actions = {};
+export const actions = {
+  async PLAYER_USERNAME(context: PlayerContext, username: string) {
+    context.commit('setPlayerUsername', username);
+  },
+};

@@ -50,4 +50,11 @@ export const actions = {
   async COMMAND_CLEAR(context: CommandContext) {
     context.dispatch('LOGS_CLEAR');
   },
+
+  /** Set player username */
+  async COMMAND_USERNAME(context: CommandContext, command: string[]) {
+    const username = command[1];
+
+    context.dispatch('PLAYER_USERNAME', username);
+  },
 };

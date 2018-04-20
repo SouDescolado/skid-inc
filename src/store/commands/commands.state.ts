@@ -23,6 +23,13 @@ export const state: CommandsState = {
       desc: 'clear the console output',
       payload: 'COMMAND_CLEAR',
     },
+    {
+      root: 'username',
+      desc: 'change your username',
+      payload: 'COMMAND_USERNAME',
+      args: true,
+      argsType: ['string'],
+    },
   ],
 
   history: [''],

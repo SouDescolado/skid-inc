@@ -1,6 +1,6 @@
 <template>
   <div id="type" @click="focus()">
-    <p class="type-prefix">user@skid-inc ></p>
+    <p class="type-prefix">{{username}}@skid-inc ></p>
     <input v-model="command" type="text" class="type-input"
       v-on:keydown.enter="submitCommand()"
       v-on:keydown.38="browseCommandHistory('up')"
@@ -22,6 +22,10 @@ export default class Type extends Vue {
     super();
 
     this.command = '';
+  }
+
+  get username(): string {
+    return this.$store.getters.getUsername;
   }
 
   /** Focus the input when clicking on the `#type` div-container. */

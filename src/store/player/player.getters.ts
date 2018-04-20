@@ -29,4 +29,8 @@ export const getters = {
   getExpReq(state: PlayerState): number {
     return state.expReq;
   },
+
+  getUsername(state: PlayerState): string {
+    return state.username;
+  },
 };
