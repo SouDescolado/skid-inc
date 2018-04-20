@@ -15,4 +15,9 @@ export const getters = {
   getCommandHistory(state: CommandsState): string {
     return (state.historyIndex >= 0) ? state.history[state.historyIndex] : '';
   },
+
+  /** Return the latest autocompleted command */
+  getAutocompletedCommand(state: CommandsState): string {
+    return state.autocomplete;
+  },
 };

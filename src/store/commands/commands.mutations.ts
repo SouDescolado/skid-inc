@@ -28,4 +28,9 @@ export const mutations = {
       }
     }
   },
+
+  /** Set the autocompleted command */
+  setAutocompletedCommand(state: CommandsState, command: string) {
+    state.autocomplete = command;
+  },
 };

@@ -7,6 +7,8 @@ export interface CommandsState {
   history: string[];
   /** Current index in the command history, `-1` for empty string */
   historyIndex: number;
+  /** Contain the latest autocompleted command */
+  autocomplete: string;
 }
 
 export const state: CommandsState = {
@@ -25,4 +27,5 @@ export const state: CommandsState = {
 
   history: [''],
   historyIndex: -1,
+  autocomplete: '',
 };
