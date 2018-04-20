@@ -5,4 +5,28 @@ import { PlayerState } from './player.state';
 
 type PlayerContext = ActionContext<PlayerState, State>;
 
-export const getters = {};
+export const getters = {
+  getMoney(state: PlayerState): number {
+    return state.money;
+  },
+
+  getTotalMoney(state: PlayerState): number {
+    return state.totalMoney;
+  },
+
+  getLevel(state: PlayerState): number {
+    return state.level;
+  },
+
+  getExp(state: PlayerState): number {
+    return state.exp;
+  },
+
+  getTotalExp(state: PlayerState): number {
+    return state.totalExp;
+  },
+
+  getExpReq(state: PlayerState): number {
+    return state.expReq;
+  },
+};
