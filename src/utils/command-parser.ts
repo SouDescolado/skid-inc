@@ -90,7 +90,9 @@ export const checkCommandArgs = (command: Models.Command, input: string[]): Chec
       }
     });
 
-    return { command, input, error, valid };
+    if (error) {
+      return { command, input, error, valid };
+    }
   }
 
   valid = true;
