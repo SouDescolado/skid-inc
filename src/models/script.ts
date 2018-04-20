@@ -12,6 +12,10 @@ export interface Script {
   };
   /** Time for script execution in seconds */
   time: number;
-  /** Level required to buy the script */
-  levelUnlock: number;
+  /** Level of the script */
+  level: number;
+  /** If autoscript is unlocked */
+  autoscript: boolean;
+  /** Price of the autoscript */
+  autoscriptPrice: number;
 }
