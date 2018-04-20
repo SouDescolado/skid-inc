@@ -2,10 +2,11 @@
   <div id="type" @click="focus()">
     <p class="type-prefix">user@skid-inc ></p>
     <input v-model="command" type="text" class="type-input"
-      v-on:keyup.enter="submitCommand()"
-      v-on:keyup.38="browseCommandHistory('up')"
-      v-on:keyup.40="browseCommandHistory('down')"
-      v-on:keyup.ctrl.75="clearToCaret($event)"
+      v-on:keydown.enter="submitCommand()"
+      v-on:keydown.38="browseCommandHistory('up')"
+      v-on:keydown.40="browseCommandHistory('down')"
+      v-on:keydown.ctrl.75="clearToCaret($event)"
+      v-on:keydown.9="autocomplete($event)"
     />
   </div>
 </template>
@@ -21,11 +22,6 @@ export default class Type extends Vue {
     super();
 
     this.command = '';
-  }
-
-  /** Computed property listen for `getCommandHistory` from `$store` */
-  get commandHistory(): string {
-    return this.$store.getters.getCommandHistory;
   }
 
   /** Focus the input when clicking on the `#type` div-container. */
@@ -64,6 +60,16 @@ export default class Type extends Vue {
     const caretPosition: number = event.target.selectionStart;
 
     this.command = this.command.substr(0, caretPosition);
+  }
+
+  /** Autocomplete the current command when pressing `tab` */
+  public autocomplete(event: KeyboardEvent): void {
+    const cmd: string[] = this.command.replace(/ +(?= )/g, '').trim().split(' ');
+
+    event.preventDefault();
+    this.$store.dispatch('COMMAND_AUTOCOMPLETE', cmd);
+
+    this.command = this.$store.getters.getAutocompletedCommand;
   }
 }
 </script>
