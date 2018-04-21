@@ -30,6 +30,13 @@ export const state: CommandsState = {
       args: true,
       argsType: ['string'],
     },
+    {
+      root: 'run',
+      desc: 'run a script to earn money and exp.',
+      payload: 'COMMAND_RUN',
+      args: true,
+      argsType: ['string'],
+    },
   ],
 
   history: [''],
