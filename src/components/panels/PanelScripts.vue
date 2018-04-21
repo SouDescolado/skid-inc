@@ -2,16 +2,17 @@
   <div id="panel-scripts">
     <div class="panel-scripts-container" v-for="script in scripts">
       <div class="panel-scripts-names">
-        <p>{{script.name}}</p>
+        <p><b>{{script.name}}</b></p>
         <p>Level</p>
         <p>Autoscript</p>
       </div>
 
       <div class="panel-scripts-values">
         <p>{{script.progression}}s</p>
-        <p>{{script.level}}</p>
+        <p v-if="script.level">{{script.level}}</p>
+        <p v-else>cost ${{script.price}}</p>
         <p v-if="script.autoscript">unlocked</p>
-        <p v-else>locked</p>
+        <p v-else>cost ${{script.autoscriptPrice}}</p>
       </div>
     </div>
   </div>
