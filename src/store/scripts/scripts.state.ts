@@ -15,6 +15,8 @@ export const state: ScriptsState = {
       level: 1,
       autoscript: false,
       autoscriptPrice: 420,
+      progression: 0,
+      triggered: false,
     },
     {
       name: 'script-2',
@@ -24,6 +26,8 @@ export const state: ScriptsState = {
       level: 1,
       autoscript: false,
       autoscriptPrice: 22500,
+      progression: 0,
+      triggered: false,
     },
     {
       name: 'script-3',
@@ -33,6 +37,8 @@ export const state: ScriptsState = {
       level: 1,
       autoscript: false,
       autoscriptPrice: 315000,
+      progression: 0,
+      triggered: false,
     },
     {
       name: 'script-4',
@@ -42,6 +48,8 @@ export const state: ScriptsState = {
       level: 1,
       autoscript: false,
       autoscriptPrice: 4.410e6,
+      progression: 0,
+      triggered: false,
     },
     {
       name: 'script-5',
@@ -51,6 +59,8 @@ export const state: ScriptsState = {
       level: 1,
       autoscript: false,
       autoscriptPrice: 61.740e6,
+      progression: 0,
+      triggered: false,
     },
   ],
 };

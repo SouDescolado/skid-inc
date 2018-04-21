@@ -12,8 +12,12 @@ export interface Script {
   };
   /** Time for script execution in seconds */
   time: number;
-  /** Level of the script */
+  /** Time elasped of the script in seconds */
+  progression: number;
+  /** Level of the script, 0 means not unlocked */
   level: number;
+  /** Track when a script have been manually started/triggered */
+  triggered: boolean;
   /** If autoscript is unlocked */
   autoscript: boolean;
   /** Price of the autoscript */
