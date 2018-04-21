@@ -3,6 +3,36 @@
   width: $tabs-width;
   padding: 16px 8px;
 
+  #panel-scripts,
+  #panel-stats {
+    p {
+      margin: 0 0 6px;
+      line-height: 1.35;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
+  #panel-scripts {
+    .panel-scripts-container {
+      display: flex;
+      justify-content: space-between;
+
+      &:not(:last-child) {
+        margin: 0 0 16px;
+      }
+
+      .panel-scripts-names {}
+
+      .panel-scripts-values {
+        text-align: right;
+        font-weight: 700;
+      }
+    }
+  }
+
   #panel-stats {
     display: flex;
     justify-content: space-between;
@@ -12,15 +42,6 @@
     .panel-stats-values {
       text-align: right;
       font-weight: 700;
-    }
-
-    p {
-      margin: 0 0 6px;
-      line-height: 1.35;
-
-      &:last-child {
-        margin: 0;
-      }
     }
   }
 }
