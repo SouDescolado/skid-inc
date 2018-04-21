@@ -57,4 +57,11 @@ export const actions = {
 
     context.dispatch('PLAYER_USERNAME', username);
   },
+
+  /** Trigger a script to run */
+  async COMMAND_RUN(context: CommandContext, command: string[]) {
+    const args = command.slice(1, command.length);
+
+    context.dispatch('SCRIPT_RUN', args);
+  },
 };

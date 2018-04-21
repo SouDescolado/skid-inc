@@ -3,6 +3,12 @@ import { ActionContext } from 'vuex';
 import { State } from '../state';
 import { ScriptsState } from './scripts.state';
 
-type LogsContext = ActionContext<ScriptsState, State>;
+import * as Models from '../../models';
 
-export const getters = {};
+type ScriptsContext = ActionContext<ScriptsState, State>;
+
+export const getters = {
+  getScripts(state: ScriptsState): Models.Script[] {
+    return state.scripts;
+  },
+};
