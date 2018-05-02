@@ -22,4 +22,6 @@ export interface Script {
   autoscript: boolean;
   /** Price of the autoscript */
   autoscriptPrice: number;
+  /** Number of times the script have been executed */
+  executed: number;
 }

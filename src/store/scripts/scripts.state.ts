@@ -20,6 +20,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 420,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'yerg.trj',
@@ -34,6 +35,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 22500,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'acid.pl',
@@ -48,6 +50,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 315000,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'memz.rsm',
@@ -62,6 +65,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 4.410e6,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'gruel.vbs',
@@ -76,6 +80,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 61.740e6,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'cih.win',
@@ -90,6 +95,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 864.360e6,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'worm.cs',
@@ -104,6 +110,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 12.101e9,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
     {
       name: 'blazer.dos',
@@ -118,6 +125,7 @@ export const state: ScriptsState = {
       autoscriptPrice: 169.415e9,
       progression: 0,
       triggered: false,
+      executed: 0,
     },
   ],
 };
