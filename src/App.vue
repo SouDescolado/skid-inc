@@ -18,6 +18,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+import { Game } from './game';
+
 import Logs from './components/Logs.vue';
 import Panel from './components/Panel.vue';
 import Type from './components/Type.vue';
@@ -26,6 +28,9 @@ import Type from './components/Type.vue';
   components: { Logs, Panel, Type },
 })
 export default class App extends Vue {
+  /** Game instance */
+  private game: Game;
+
   /** The interval between execution times of the core-loop `1000 / fps` */
   private interval: number;
   /** Frames-per-seconds, used in the interval */
@@ -39,6 +44,8 @@ export default class App extends Vue {
 
   constructor() {
     super();
+
+    this.game = new Game();
 
     this.before = new Date().getTime();
     this.now = new Date().getTime();
@@ -67,7 +74,7 @@ export default class App extends Vue {
 
   /** Update called by the loop */
   public update(times: number): void {
-    return;
+    this.game.update(times);
   }
 }
 </script>

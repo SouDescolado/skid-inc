@@ -8,7 +8,7 @@
       </div>
 
       <div class="panel-scripts-values">
-        <p>{{script.progression}}s</p>
+        <p>{{scriptTime(index)}}</p>
         <p v-if="script.level">{{script.level}}</p>
         <p v-else>cost ${{scriptPrice(index)}}</p>
         <p v-if="script.autoscript">unlocked</p>
@@ -42,6 +42,11 @@ export default class Panel extends Vue {
   /** Return a nicely formatted autoscript-price string */
   public autoscriptPrice(i: number): string {
     return Utils.format(this.scripts[i].autoscriptPrice);
+  }
+
+  /** Return a nicely formatted script-time string */
+  public scriptTime(i: number): string {
+    return `${Utils.format(this.scripts[i].progression)}s`;
   }
 }
 </script>
