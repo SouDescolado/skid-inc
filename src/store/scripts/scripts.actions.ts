@@ -26,15 +26,4 @@ export const actions = {
       context.commit('scriptStart', scriptName);
     }
   },
-
-  /** Called from the game-loop update */
-  async SCRIPT_LOOP(context: ScriptContext, times: number) {
-    const scripts = context.state.scripts
-      .filter((scr) => scr.triggered || scr.autoscript)
-      .map((scr) => scr.name);
-
-    if (scripts.length) {
-      context.commit('scriptLoop', { scripts, times });
-    }
-  },
 };
