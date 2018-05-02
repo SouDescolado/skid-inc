@@ -6,6 +6,11 @@ import { CommandsState } from './commands.state';
 export const mutations = {
   /** Push the command sent into the `history` */
   submitCommandHistory(state: CommandsState, command: string[]) {
+    /** If the latest command is the same, don't push it */
+    if (state.history[0] === command.join(' ')) {
+      return;
+    }
+
     /* If we exceed a limit of `x` stored commands, remove the oldest one */
     if (state.history.length >= 10) {
       state.history.splice((state.history.length - 1), 1);
