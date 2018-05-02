@@ -6,9 +6,9 @@ export interface Script {
   /** Multiple income possible */
   income: {
     /** Money income */
-    money?: number;
+    money: number;
     /** Exp income */
-    exp?: number;
+    exp: number;
   };
   /** Time for script execution in seconds */
   time: number;
