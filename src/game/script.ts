@@ -9,15 +9,14 @@ export class Script {
   }
 
   public update(times: number): void {
+    /** Get only active scripts */
     const scripts = this.scripts.filter((script) => script.triggered && script.level && !script.autoscript);
 
     scripts.forEach((script) => {
       script.progression += times / 30;
 
       if (script.progression >= script.time) {
-        script.executed += 1;
-        script.progression = 0;
-        script.triggered = false;
+        this.store.dispatch('SCRIPT_EXECUTED', script.name);
       }
     });
   }

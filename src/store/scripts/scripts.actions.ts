@@ -26,4 +26,14 @@ export const actions = {
       context.commit('scriptStart', scriptName);
     }
   },
+
+  /** Logic when a script have been executed */
+  async SCRIPT_EXECUTED(context: ScriptContext, scriptName: string) {
+    const script = context.state.scripts.find((scr) => scr.name === scriptName) as Models.Script;
+
+    context.commit('scriptEnd', scriptName);
+    context.dispatch('LOGS_PRINT', `${script.name} successfully executed, you earned <span class="success">$${Utils.format(script.income.money)}</span> and <span class="info">${Utils.format(script.income.exp)} exp</span>.`);
+    context.dispatch('PLAYER_EARN_MONEY', script.income.money);
+    context.dispatch('PLAYER_EARN_EXP', script.income.exp);
+  },
 };

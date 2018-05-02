@@ -7,4 +7,23 @@ export const mutations = {
   setPlayerUsername(state: PlayerState, username: string) {
     state.username = username;
   },
+
+  /** Earn money */
+  earnMoney(state: PlayerState, amount: number) {
+    state.money += amount;
+    state.totalMoney += amount;
+  },
+
+  /** Earn experience */
+  earnExp(state: PlayerState, amount: number) {
+    state.exp += amount;
+    state.totalExp += amount;
+  },
+
+  /** Level-up if possible */
+  levelup(state: PlayerState) {
+    state.exp -= state.expReq;
+    state.expReq = Math.floor(100 * Math.pow(1.5, state.level + 1));
+    state.level += 1;
+  },
 };

@@ -18,6 +18,8 @@ export const mutations = {
 
     if (script) {
       script.triggered = false;
+      script.progression = 0;
+      script.executed += 1;
     }
   },
 };
