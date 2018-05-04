@@ -1,7 +1,8 @@
-// custom styling for vue-tabs-component module
+// Custom styling for vue-tabs-component module
 .tabs-component {
-  // menu-nav
   .tabs-component-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
     display: flex;
     align-items: stretch;
     justify-content: flex-start;
@@ -68,7 +69,6 @@
     }
   }
 
-  // menu content
   .tabs-component-panels {
     padding: 8px 8px;
     margin: 0;
