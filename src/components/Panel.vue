@@ -5,6 +5,10 @@
         <panel-scripts></panel-scripts>
       </tab>
 
+      <tab name="Servers" prefix="<i class='fa fa-server'></i>">
+        <panel-servers></panel-servers>
+      </tab>
+
       <tab name="Stats" prefix="<i class='fa fa-bar-chart'></i>">
         <panel-stats></panel-stats>
       </tab>
@@ -19,9 +23,10 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import PanelStats from './panels/PanelStats.vue';
 import PanelScripts from './panels/PanelScripts.vue';
+import PanelServers from './panels/PanelServers.vue';
 
 @Component({
-  components: { PanelStats, PanelScripts },
+  components: { PanelStats, PanelScripts, PanelServers },
 })
 export default class Panel extends Vue {
   constructor() {
