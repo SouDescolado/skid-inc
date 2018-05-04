@@ -42,6 +42,14 @@ export const state: CommandsState = {
       argsType: ['string'],
       autocomplete: [scriptNames],
     },
+    {
+      root: 'buy',
+      desc: 'buy/upgrade new things to progress further',
+      payload: 'COMMAND_BUY',
+      args: true,
+      argsType: ['string'],
+      autocomplete: [['autoscript', 'script', 'server']],
+    },
   ],
 
   history: [''],
