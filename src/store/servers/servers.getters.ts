@@ -7,4 +7,8 @@ import * as Models from '../../models';
 
 type ServersContext = ActionContext<ServersState, State>;
 
-export const getters = {};
+export const getters = {
+  getServers(state: ServersState): Models.Server[] {
+    return state.servers;
+  },
+};
