@@ -7,11 +7,15 @@ export interface Server {
   inflation: number;
   /** Max quantity of this server available */
   max: number;
+  /** Level of the server */
+  level: number;
   /** Effects of the server, seen as multipliers */
   effects: {
     /** Player money income multiplier */
     money?: number;
     /** Player exp income multiplier */
     exp?: number;
+    /** Reduce time taken to execute script, as a multiplier */
+    time?: number;
   };
 }
