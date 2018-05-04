@@ -1,4 +1,8 @@
 import * as Models from '../../models';
+import { state as scriptsState } from '../scripts/scripts.state';
+
+/** Retrieve scripts names from the scripts state */
+const scriptNames = scriptsState.scripts.map((script) => script.name);
 
 export interface CommandsState {
   /** List of commands */
@@ -36,6 +40,7 @@ export const state: CommandsState = {
       payload: 'COMMAND_RUN',
       args: true,
       argsType: ['string'],
+      autocomplete: [scriptNames],
     },
   ],
 
