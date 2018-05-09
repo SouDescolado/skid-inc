@@ -1,8 +1,10 @@
 import * as Models from '../../models';
 import { state as scriptsState } from '../scripts/scripts.state';
+import { state as serversState } from '../servers/servers.state';
 
-/** Retrieve scripts names from the scripts state */
+/** Retrieve scripts + server names from the store state */
 const scriptNames = scriptsState.scripts.map((script) => script.name);
+const serverNames = serversState.servers.map((server) => server.name);
 
 export interface CommandsState {
   /** List of commands */
@@ -41,6 +43,10 @@ export const state: CommandsState = {
       args: true,
       argsType: ['string'],
       autocomplete: [scriptNames],
+      arguments: [{
+        type: 'string',
+        possibilities: scriptNames,
+      }],
     },
     {
       root: 'buy',
@@ -49,6 +55,21 @@ export const state: CommandsState = {
       args: true,
       argsType: ['string'],
       autocomplete: [['autoscript', 'script', 'server']],
+      arguments: [{
+        type: 'string',
+        possibilities: ['autoscript', 'script'],
+        argument: {
+          type: 'string',
+          possibilities: scriptNames,
+        },
+      }, {
+        type: 'string',
+        possibilities: ['server'],
+        argument: {
+          type: 'string',
+          possibilities: serverNames,
+        },
+      }],
     },
   ],
 

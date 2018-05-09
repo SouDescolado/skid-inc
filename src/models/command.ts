@@ -11,6 +11,9 @@ export interface Command {
   /** If support specific arguments */
   args?: boolean;
 
+  /** If support specific arguments */
+  hasArgs?: boolean;
+
   /** If support arguments, set a specific type of arguments that can be passed */
   argsType?: string[];
 
@@ -22,4 +25,23 @@ export interface Command {
 
   /** Autocomplete arguments */
   autocomplete?: string[][];
+
+  /** Arguments available for autocomplete, up to 2 nested arguments */
+  arguments?: Array<{
+    /** Root argument type */
+    type: 'string' | 'number';
+
+    /** Root argument possibilities */
+    possibilities: string[];
+
+    /** Nested arguments */
+    argument?: {
+
+      /** Type of the nested argument */
+      type: 'string' | 'number';
+
+      /** Possibilities for the nested argument */
+      possibilities: string[];
+    };
+  }>;
 }
