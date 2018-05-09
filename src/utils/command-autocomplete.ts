@@ -1,37 +1,79 @@
 import * as Models from '../models';
 
-/** Return the autocompleted command depending */
-export const autocompleteCommand = (commands: Models.Command[], input: string[]): string => {
+/** Find the argument where the cursor is */
+const findCursorArgument = (cursorPos: number, root: string, args: string[]) => {
+  const cursorPositionRelativeToArgs = cursorPos - root.length;
+  let argumentWhereCursorIs: string | undefined;
+  let count = 1;
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    /* If another argument after, +1 for the space character */
+    count += (arg[i + 1]) ? arg.length + 1 : arg.length;
+
+    /* When count reach the cursor position relative to args, we have found the argument where the cursor is */
+    if (count >= cursorPositionRelativeToArgs) {
+      argumentWhereCursorIs = arg;
+      i = args.length;
+    }
+  }
+
+  return argumentWhereCursorIs;
+};
+
+/** Return the autocompleted command depending of the user input */
+export const autocompleteCommand = (commands: Models.Command[], input: string[], cursorPos: number): string => {
   const root = input[0];
   const args = input.slice(1, input.length);
-  const cmd = commands.find((el) => el.root.indexOf(root) === 0);
+  const command = commands.find((cmd) => cmd.root === root);
 
-  let fullCmd = input.join(' ');
+  let typing = input.join(' ');
 
-  /* If no arguments found, process the root only */
-  if (args.length === 0) {
-    /* If input is equal to nothing: return an empty string. Otherwise, find the command based on the root start */
-    if (root.length) {
-      const cmdRoot = (cmd !== undefined) ? cmd.root : fullCmd;
-      return cmdRoot;
-    } else {
-      return fullCmd;
-    }
-  } else {
-    let argToComplete = args[args.length - 1];
+  /* For a simple command without args, find the root command */
+  if (args.length <= 0 && !command) {
+    const cmd = commands.find((obj) => obj.root.startsWith(root));
 
-    /* If argument autocomplete exist for this command */
-    if (cmd && cmd.autocomplete) {
-      const argumentFind = cmd.autocomplete[args.length - 1].find((arg) => arg.startsWith(argToComplete));
+    (cmd)
+      ? typing = `${cmd.root} `
+      : typing = typing;
+  } else if (command && command.arguments) {
+    /** Argument where the cursor is */
+    const cursorArgument = findCursorArgument(cursorPos, root, args);
 
-      /* If we can find an argument, update the `fullCmd` */
-      if (argumentFind) {
-        argToComplete = argumentFind;
-        args[args.length - 1] = argToComplete;
-        fullCmd = `${root} ${args.join(' ')}`;
+    /* If we can find the argument where the cursor is */
+    if (cursorArgument) {
+      /** Index of `cursorArgument` in the `args` array */
+      const argumentIndexInArgs = args.indexOf(cursorArgument);
+      /** Find if we have an argument before the `cursorArgument` */
+      const argumentBefore: string | undefined = args[argumentIndexInArgs - 1];
+      let arg = cursorArgument;
+
+      for (const argumentObj of command.arguments) {
+        /** Root argument already completed by the user */
+        const argumentAlreadyComplete = argumentObj.possibilities.indexOf(arg);
+        /** Root argument not completed by the user and found the full possibility */
+        const argumentToComplete = argumentObj.possibilities.find((possibility) => possibility.startsWith(arg));
+
+        if (argumentAlreadyComplete === -1 && argumentToComplete) {
+          arg = argumentToComplete;
+          args[argumentIndexInArgs] = arg;
+          typing = `${root} ${args.join(' ')} `;
+          break;
+        } else if (argumentObj.argument && argumentBefore && argumentObj.possibilities.indexOf(argumentBefore) > -1) {
+          const nestedArgumentAlreadyComplete = argumentObj.argument.possibilities.indexOf(arg);
+          const nestedArgumentToComplete = argumentObj.argument.possibilities.find((possibility) => possibility.startsWith(arg));
+
+          if (nestedArgumentAlreadyComplete === -1 && nestedArgumentToComplete) {
+            arg = nestedArgumentToComplete;
+            args[argumentIndexInArgs] = arg;
+            typing = `${root} ${args.join(' ')} `;
+            break;
+          }
+        }
       }
     }
-
-    return fullCmd;
   }
+
+  return typing;
 };

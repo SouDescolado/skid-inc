@@ -69,9 +69,10 @@ export default class Type extends Vue {
   /** Autocomplete the current command when pressing `tab` */
   public autocomplete(event: KeyboardEvent): void {
     const cmd: string[] = this.command.replace(/ +(?= )/g, '').trim().split(' ');
+    const cursorPos = (event.target as HTMLInputElement).selectionStart;
 
     event.preventDefault();
-    this.$store.dispatch('COMMAND_AUTOCOMPLETE', cmd);
+    this.$store.dispatch('COMMAND_AUTOCOMPLETE', { cmd, cursorPos });
 
     this.command = this.$store.getters.getAutocompletedCommand;
   }

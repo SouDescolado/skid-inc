@@ -33,8 +33,8 @@ export const actions = {
   },
 
   /** Find the command to autocomplete */
-  async COMMAND_AUTOCOMPLETE(context: CommandContext, input: string[]) {
-    const autocompleted = Utils.autocompleteCommand(context.state.commands, input);
+  async COMMAND_AUTOCOMPLETE(context: CommandContext, args: { cmd: string[], cursorPos: number }) {
+    const autocompleted = Utils.autocompleteCommand(context.state.commands, args.cmd, args.cursorPos);
 
     context.commit('setAutocompletedCommand', autocompleted);
   },
