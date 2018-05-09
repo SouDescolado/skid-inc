@@ -18,7 +18,7 @@ export const state: ServersState = {
       },
     },
     {
-      name: 'web',
+      name: 'vps',
       basePrice: 800,
       inflation: 1.18,
       max: Infinity,
