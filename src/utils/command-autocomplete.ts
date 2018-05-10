@@ -1,7 +1,7 @@
 import * as Models from '../models';
 
 /** Find the argument where the cursor is */
-const findCursorArgument = (cursorPos: number, root: string, args: string[]) => {
+export const findCursorArgument = (cursorPos: number, root: string, args: string[]) => {
   const cursorPositionRelativeToArgs = cursorPos - root.length;
   let argumentWhereCursorIs: string | undefined;
   let count = 1;
