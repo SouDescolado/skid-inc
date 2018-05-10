@@ -6,7 +6,8 @@
     "build": "vue-cli-service build",
     "commit": "yarn lint && git-cz",
     "lint": "vue-cli-service lint",
-    "serve": "vue-cli-service serve --open"
+    "serve": "vue-cli-service serve --open",
+    "test": "tsc && ava --verbose"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
@@ -23,6 +24,7 @@
     "@vue/cli-plugin-babel": "^3.0.0-beta.6",
     "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
+    "ava": "^0.25.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "lint-staged": "^6.0.0",
@@ -62,5 +64,9 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "ava": {
+    "files": ["ts-build/test/**/*.js"],
+    "modules": false
   }
 }
