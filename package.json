@@ -6,6 +6,7 @@
     "build": "vue-cli-service build",
     "commit": "yarn lint && git-cz",
     "lint": "vue-cli-service lint",
+    "netlify": "yarn build && http-server ./dist",
     "serve": "vue-cli-service serve --open",
     "test": "tsc && ava --verbose"
   },
