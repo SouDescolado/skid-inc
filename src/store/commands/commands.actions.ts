@@ -10,25 +10,25 @@ type CommandContext = ActionContext<CommandsState, RootState>;
 
 export const actions = {
   /** Received a parsed command, parse command logic and push it to the command history */
-  async COMMAND_SUBMIT(context: CommandContext, command: string[]) {
-    const root = command[0];
-    const cmd = context.state.commands.find((el) => el.root === root);
-    const cmdCheck = (cmd) ? Utils.checkCommandArgs(cmd, command) : undefined;
+  async COMMAND_SUBMIT(context: CommandContext, input: string[]) {
+    const root = input.shift();
+    const args = input.slice(0, input.length);
+    const fullInput = [root as string, ...args];
 
-    /* Submit the command to the command history */
-    context.commit('submitCommandHistory', command);
-    /* Display the command entered */
-    context.dispatch('LOGS_PRINT', `> <span class="sub">${command.join(' ')}</span>`);
+    const command = context.state.commands.find((el) => el.root === root);
+    const commandError = (command) ? Utils.parseCommand(command, fullInput) : undefined;
 
-    if (cmd && cmdCheck) {
-      if (cmdCheck.valid) {
-        context.dispatch(cmdCheck.command.payload, command);
+    context.commit('submitCommandHistory', fullInput);
+    context.dispatch('LOGS_PRINT', `> <span class="sub">${fullInput.join(' ')}</span>`);
+
+    if (command) {
+      if (commandError) {
+        context.dispatch('LOGS_PRINT', commandError);
       } else {
-        context.dispatch('LOGS_PRINT', cmdCheck.error);
+        context.dispatch(command.payload, fullInput);
       }
     } else {
-      const error = `<span class="error">error</span> can't find ${root} command, try <span class="sub">help</span> for a list of commands`;
-      context.dispatch('LOGS_PRINT', error);
+      context.dispatch('LOGS_PRINT', `<span class="error">error</span> can't find ${root} command, try <span class="sub">help</span> for a list of commands`);
     }
   },
 

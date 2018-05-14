@@ -1,100 +1,115 @@
-import * as Models from '../models';
+import { Command } from '../models';
 
-/** Return information about the command which was parsed */
-export interface CheckCommandArgs {
-  /** Find the command from the commands list */
-  command: Models.Command;
-  /** User-input entered to find the command, processed as ['hello', 'world'] */
-  input: string[];
-  /** If command is invalid, return an error string ready to be printed in the logs */
-  error: string;
-  /** Check if the command is valid and can be executed based on the input */
-  valid: boolean;
-}
-
-/** Interface to loop on all `StatusTypes` */
-interface CommandStatus {
-  [key: string]: string;
-}
-
-/** Generate correct errors depending of the command executed */
-export const generateCommandStatus = (command: Models.Command): CommandStatus => {
+export const generateErrors = (command: Command): { [s: string]: string; } => {
   return {
-    HELP_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-h</span> or <span class="sub">--help</span> arguments`,
-    LIST_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-l</span> or <span class="sub">--list</span> arguments`,
+    HELP_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-h</span> or <span class="sub">--help</span> flag`,
+    LIST_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-l</span> or <span class="sub">--list</span> flag`,
     ARGUMENTS_NOT_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't need any arguments, try to remove them`,
     ARGUMENTS_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command require arguments`,
     TOO_MUCH_ARGUMENTS: `<span class="error">error</span> too much arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
+    TOO_FEW_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub"${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
     MISSING_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>` ,
     INVALID_ARGUMENTS: `<span class="error">error</span> some arguments are invalid, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
-    INVALID_STRING_ARGUMENT: `<span class="error">error</span> expected a string argument and instead got a number, check your command`,
-    INVALID_NUMBER_ARGUMENT: `<span class="error">error</span> expected a number argument and instead got a string, check your command`,
+    INVALID_ARGUMENT_TYPE: `<span class="error">error</span> invalid argument(s) type`,
   };
 };
 
-/** Take a command and user input then check for valid arguments */
-export const checkCommandArgs = (command: Models.Command, input: string[]): CheckCommandArgs => {
-  const args: string[] = input.slice(1, input.length);
-  const types = generateCommandStatus(command);
-  let error: string = '';
-  let valid: boolean = false;
+/** Check a command if it is valid and can be executed */
+export const parseCommand = (command: Command, input: string[]): string | undefined => {
+  const types = generateErrors(command);
+  const args = input.slice(1, input.length);
 
-  /* If command don't support `-h` or `--help` */
-  if (!command.help && (input.indexOf('-h') > -1 || input.indexOf('--help') > -1)) {
-    error = types.HELP_NOT_SUPPORTED;
-    return { command, input, error, valid };
+  const flags = checkFlags(command, args);
+  const argsLength = checkArgsLength(command, args);
+  const argsTypes = checkArgsTypes(command, args);
+
+  if (flags) {
+    return types[flags];
   }
 
-  /* If command don't support `-l` or `--list` */
-  if (!command.list && (input.indexOf('-l') > -1 || input.indexOf('--list') > -1)) {
-    error = types.LIST_NOT_SUPPORTED;
-    return { command, input, error, valid };
+  if (argsLength) {
+    return types[argsLength];
   }
 
-  /* If command don't require arguments and arguments are passed */
-  if (!command.args && args.length > 0) {
-    error = types.ARGUMENTS_NOT_REQUIRED;
-    return { command, input, error, valid };
+  if (argsTypes) {
+    return types[argsTypes];
+  }
+};
+
+/** Check for `--help`/`-h` and `--list`/`-l` flags */
+const checkFlags = (command: Command, args: string[]): string | undefined => {
+  const hasHelp = args.indexOf('--help') > -1 || args.indexOf('-h') > -1;
+  const hasList = args.indexOf('--list') > -1 || args.indexOf('-l') > -1;
+
+  if (hasHelp && !command.help) {
+    return 'HELP_NOT_SUPPORTED';
   }
 
-  /* If command require arguments and no arguments are passed */
-  if (command.args && args.length === 0) {
-    error = types.ARGUMENTS_REQUIRED;
-    return { command, input, error, valid };
+  if (hasList && !command.list) {
+    return 'LIST_NOT_SUPPORTED';
+  }
+};
+
+/** Check the amount of arguments passed */
+const checkArgsLength = (command: Command, args: string[]): string | undefined => {
+  if (args.length && !command.args && !command.arguments) {
+    return 'ARGUMENTS_NOT_REQUIRED';
   }
 
-  /* If user entered too much arguments */
-  if (command.args && command.argsType && args.length > command.argsType.length) {
-    error = types.TOO_MUCH_ARGUMENTS;
-    return { command, input, error, valid };
+  if (args.length === 0 && command.args && command.arguments) {
+    return 'ARGUMENTS_REQUIRED';
   }
 
-  /* If user entered too few arguments */
-  if (command.args && command.argsType && args.length < command.argsType.length) {
-    error = types.MISSING_ARGUMENTS;
-    return { command, input, error, valid };
-  }
+  /**
+   * - Loop on all arguments objects
+   * - If the first argument matches a possibility, we have found the right argument object
+   * - If the user entered a second argument but we don't have a nested-argument object, there is too much arguments
+   * - If the user haven't entered a second argument but we have a nested-argument object, there is too few arguments
+   * - Break the loop since we don't want to loop over other arguments objects
+   */
+  if (command.args && command.arguments) {
+    for (const argObj of command.arguments) {
+      const findPossibility = argObj.possibilities.indexOf(args[0]) > -1;
 
-  /* If arguments types doesn't match */
-  if (command.args && command.argsType && args.length === command.argsType.length) {
-    /* `args[i]` parsed and check its type: `isNaN` allow us to know if it's a string or number */
-    command.argsType.forEach((type, i) => {
-      if (type === 'number' && args[i] && isNaN(parseInt(args[i], 10))) {
-        error = types.INVALID_NUMBER_ARGUMENT;
-        return;
+      if (findPossibility) {
+        if (!argObj.argument && args[1]) {
+          return 'TOO_MUCH_ARGUMENTS';
+        } else if (argObj.argument && args[1] === undefined) {
+          return 'TOO_FEW_ARGUMENTS';
+        }
+
+        break;
       }
-
-      if (type === 'string' && args[i] && !isNaN(parseInt(args[i], 10))) {
-        error = types.INVALID_STRING_ARGUMENT;
-        return;
-      }
-    });
-
-    if (error) {
-      return { command, input, error, valid };
     }
   }
+};
 
-  valid = true;
-  return { command, input, error, valid };
+/** Check the arguments types */
+const checkArgsTypes = (command: Command, args: string[]) => {
+  for (const arg of args) {
+    if (!command.arguments) {
+      return;
+    }
+
+    const argType = (isNaN(parseInt(arg, 10))) ? 'string' : 'number';
+
+    /**
+     * - Loop on all arguments
+     * - Find the possibility in an argument
+     * - If can't find a possibility, find another one on the nested argument
+     */
+    for (const argumentObj of command.arguments) {
+      const findPossibility = argumentObj.possibilities.indexOf(arg);
+
+      if (findPossibility === -1 && argumentObj.type !== argType) {
+        return 'INVALID_ARGUMENT_TYPE';
+      } else if (argumentObj.argument) {
+        const findNestedPossibility = argumentObj.argument.possibilities.indexOf(arg);
+
+        if (findNestedPossibility > -1 && argumentObj.argument.type !== argType) {
+          return 'INVALID_ARGUMENT_TYPE';
+        }
+      }
+    }
+  }
 };
