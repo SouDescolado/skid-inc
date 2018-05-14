@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
+    "target": "es6",
+    "module": "es6",
     "strict": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -9,18 +9,12 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "outDir": "./ts-build",
-    "lib": ["es5", "es2015.core", "es2015.promise", "dom"],
+    "lib": ["es6", "es5", "es2015.core", "es2015.promise", "dom"],
     "types": ["node"],
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.vue",
-    "test/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["node_modules"]
 }
