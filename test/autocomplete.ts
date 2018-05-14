@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { state as commandsState } from '../src/store/commands/commands.state';
+import { state as commandsState } from '../src/store/commands';
 import { autocompleteCommand, findCursorArgument } from '../src/utils/command-autocomplete';
 
 const commands = commandsState.commands;
