@@ -9,8 +9,6 @@ export const generateErrors = (command: Command): { [s: string]: string; } => {
     ARGUMENT_DOESNT_EXIST: `<span class="error">error</span> argument(s) doesn't exist(s) for the <span class="sub">${command.root}</span> command`,
     TOO_MUCH_ARGUMENTS: `<span class="error">error</span> too much arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
     TOO_FEW_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub"${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
-    MISSING_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>` ,
-    INVALID_ARGUMENTS: `<span class="error">error</span> some arguments are invalid, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
     INVALID_ARGUMENT_TYPE: `<span class="error">error</span> invalid argument(s) type`,
   };
 };
@@ -80,7 +78,7 @@ const checkArgsLength = (command: Command, args: string[]): string | undefined =
       iterations += 1;
 
       if (findPossibility) {
-        if (!argObj.argument && args[1]) {
+        if (!argObj.argument && args[1] || argObj.argument && args.length > 2) {
           return 'TOO_MUCH_ARGUMENTS';
         } else if (argObj.argument && args[1] === undefined) {
           return 'TOO_FEW_ARGUMENTS';
@@ -89,9 +87,7 @@ const checkArgsLength = (command: Command, args: string[]): string | undefined =
         }
 
         break;
-      }
-
-      if (command.arguments.length >= iterations && !hasHelp && !hasList) {
+      } else if (iterations >= command.arguments.length && !hasHelp && !hasList) {
         return 'ARGUMENT_DOESNT_EXIST';
       }
     }
