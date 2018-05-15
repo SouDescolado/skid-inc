@@ -6,6 +6,7 @@ export const generateErrors = (command: Command): { [s: string]: string; } => {
     LIST_NOT_SUPPORTED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't support <span class="sub">-l</span> or <span class="sub">--list</span> flag`,
     ARGUMENTS_NOT_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command doesn't need any arguments, try to remove them`,
     ARGUMENTS_REQUIRED: `<span class="error">error</span> <span class="sub">${command.root}</span> command require arguments`,
+    ARGUMENT_DOESNT_EXIST: `<span class="error">error</span> argument(s) doesn't exist(s) for the <span class="sub">${command.root}</span> command`,
     TOO_MUCH_ARGUMENTS: `<span class="error">error</span> too much arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
     TOO_FEW_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub"${command.root} -l</span> or <span class="sub">${command.root} --list</span>`,
     MISSING_ARGUMENTS: `<span class="error">error</span> too few arguments, try <span class="sub">${command.root} -l</span> or <span class="sub">${command.root} --list</span>` ,
@@ -70,17 +71,28 @@ const checkArgsLength = (command: Command, args: string[]): string | undefined =
    * - Break the loop since we don't want to loop over other arguments objects
    */
   if (command.args && command.arguments) {
+    const hasHelp = args.indexOf('--help') > -1 || args.indexOf('-h') > -1;
+    const hasList = args.indexOf('--list') > -1 || args.indexOf('-l') > -1;
+    let iterations = 0;
+
     for (const argObj of command.arguments) {
       const findPossibility = argObj.possibilities.indexOf(args[0]) > -1;
+      iterations += 1;
 
       if (findPossibility) {
         if (!argObj.argument && args[1]) {
           return 'TOO_MUCH_ARGUMENTS';
         } else if (argObj.argument && args[1] === undefined) {
           return 'TOO_FEW_ARGUMENTS';
+        } else if (argObj.argument && argObj.argument.possibilities.indexOf(args[1]) === -1) {
+          return 'ARGUMENT_DOESNT_EXIST';
         }
 
         break;
+      }
+
+      if (command.arguments.length >= iterations && !hasHelp && !hasList) {
+        return 'ARGUMENT_DOESNT_EXIST';
       }
     }
   }
