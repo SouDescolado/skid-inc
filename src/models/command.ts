@@ -11,20 +11,11 @@ export interface Command {
   /** If support specific arguments */
   args?: boolean;
 
-  /** If support specific arguments */
-  hasArgs?: boolean;
-
-  /** If support arguments, set a specific type of arguments that can be passed */
-  argsType?: string[];
-
   /** Support the `--list` or `-l` argument */
   list?: boolean;
 
   /** Support the `--help` or `-h` argument */
   help?: boolean;
-
-  /** Autocomplete arguments */
-  autocomplete?: string[][];
 
   /** Arguments available for autocomplete, up to 2 nested arguments */
   arguments?: Array<{
