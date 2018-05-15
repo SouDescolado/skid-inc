@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "netlify": "yarn build && http-server ./dist",
     "serve": "vue-cli-service serve --open",
-    "test": "tsc -p tsconfig.test.json && ava --verbose"
+    "test": "tsc -p tsconfig.test.json && ava --verbose --serial"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
