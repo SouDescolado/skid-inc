@@ -22,8 +22,8 @@ export const actions = {
     context.dispatch('LOGS_PRINT', `> <span class="sub">${fullInput.join(' ')}</span>`);
 
     if (command) {
-      if (commandError) {
-        context.dispatch('LOGS_PRINT', commandError);
+      if (commandError && commandError.errored) {
+        context.dispatch('LOGS_PRINT', commandError.errorMessage);
       } else {
         context.dispatch(command.payload, fullInput);
       }

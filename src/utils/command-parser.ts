@@ -15,7 +15,7 @@ export const generateErrors = (command: Command): { [s: string]: string; } => {
 };
 
 /** Check a command if it is valid and can be executed */
-export const parseCommand = (command: Command, input: string[]): string | undefined => {
+export const parseCommand = (command: Command, input: string[]) => {
   const types = generateErrors(command);
   const args = input.slice(1, input.length);
 
@@ -23,17 +23,19 @@ export const parseCommand = (command: Command, input: string[]): string | undefi
   const argsLength = checkArgsLength(command, args);
   const argsTypes = checkArgsTypes(command, args);
 
-  if (flags) {
-    return types[flags];
-  }
+  const errorMessage = (flags)
+    ? types[flags]
+    : (argsLength)
+      ? types[argsLength]
+      : (argsTypes)
+        ? types[argsTypes]
+        : null;
 
-  if (argsLength) {
-    return types[argsLength];
-  }
-
-  if (argsTypes) {
-    return types[argsTypes];
-  }
+  return {
+    errored: (errorMessage) ? true : false,
+    errorCode: flags || argsLength || argsTypes,
+    errorMessage,
+  };
 };
 
 /** Check for `--help`/`-h` and `--list`/`-l` flags */
