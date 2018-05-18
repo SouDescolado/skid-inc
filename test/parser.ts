@@ -114,3 +114,13 @@ test('reject a command that have too few arguments', (t) => {
     t.is(error.errorCode, 'TOO_FEW_ARGUMENTS');
   });
 });
+
+test('accept a command with valid arguments', (t) => {
+  const inputs = ['buy server telnet', 'run hare.ctx', 'buy autoscript hare.ctx'];
+
+  inputs.forEach((input) => {
+    const { error } = processInput(input);
+
+    t.false(error.errored);
+  });
+});
