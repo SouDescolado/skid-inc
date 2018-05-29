@@ -67,7 +67,9 @@
     }
   },
   "ava": {
-    "files": ["ts-build/test/**/*.js"],
+    "files": [
+      "ts-build/test/**/*.js"
+    ],
     "modules": false
   }
 }
