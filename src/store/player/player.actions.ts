@@ -39,4 +39,22 @@ export const actions = {
     context.commit('earnExp', amount);
     context.dispatch('PLAYER_LEVELUP');
   },
+
+  /** Update the player multipliers */
+  async PLAYER_MULTIPLIER(context: PlayerContext) {
+    const servers = context.rootState.servers.servers;
+    const effects: Models.ServerEffects = {
+      money: 1,
+      exp: 1,
+      time: 1,
+    };
+
+    /* Influence the effects based on servers owned */
+    servers.forEach((server) => {
+      Object.entries(server.effects)
+        .forEach(([effectName, effect]) => effects[effectName]! += effect! * server.level);
+    });
+
+    context.commit('updateEffects', effects);
+  },
 };

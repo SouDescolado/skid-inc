@@ -6,6 +6,10 @@ import { PlayerState } from './player.state';
 type PlayerContext = ActionContext<PlayerState, State>;
 
 export const getters = {
+  getPlayerState(state: PlayerState) {
+    return state;
+  },
+
   getMoney(state: PlayerState): number {
     return state.money;
   },
@@ -32,5 +36,9 @@ export const getters = {
 
   getUsername(state: PlayerState): string {
     return state.username;
+  },
+
+  getMultipliers(state: PlayerState) {
+    return state.multipliers;
   },
 };

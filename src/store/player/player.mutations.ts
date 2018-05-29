@@ -26,4 +26,10 @@ export const mutations = {
     state.expReq = Math.floor(100 * Math.pow(1.5, state.level + 1));
     state.level += 1;
   },
+
+  /** Update global player effects */
+  updateEffects(state: PlayerState, multipliers: Models.ServerEffects) {
+    Object.entries(multipliers)
+      .forEach(([multName, multValue]) => state.multipliers[multName] = multValue!);
+  },
 };
