@@ -1,15 +1,17 @@
 <template>
   <div id="panel-stats">
-    <div class="panel-stats-names">
-      <p>Level</p>
-      <p>Experience</p>
-      <p>Money</p>
-    </div>
+    <div class="panel-container">
+      <div class="panel-names">
+        <p>Level</p>
+        <p>Experience</p>
+        <p>Money</p>
+      </div>
 
-    <div class="panel-stats-values">
-      <p>{{level}}</p>
-      <p>{{exp}}/{{expReq}}</p>
-      <p>${{money}}</p>
+      <div class="panel-values">
+        <p>{{level}}</p>
+        <p>{{exp}}/{{expReq}}</p>
+        <p>${{money}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -49,4 +51,6 @@ export default class Panel extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../../styles/variables.scss';
+</style>

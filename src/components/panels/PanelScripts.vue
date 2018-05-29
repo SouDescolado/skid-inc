@@ -1,13 +1,13 @@
 <template>
   <div id="panel-scripts">
-    <div class="panel-scripts-container" v-for="(script, index) in scripts">
-      <div class="panel-scripts-names">
+    <div class="panel-container" v-for="(script, index) in scripts">
+      <div class="panel-names">
         <p><b>{{script.name}}</b></p>
         <p>Level</p>
         <p>Autoscript</p>
       </div>
 
-      <div class="panel-scripts-values">
+      <div class="panel-values">
         <p>{{scriptTime(index)}}</p>
         <p v-if="script.level">{{script.level}}</p>
         <p v-else>cost ${{scriptPrice(index)}}</p>
@@ -51,4 +51,6 @@ export default class Panel extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../../styles/variables.scss';
+</style>

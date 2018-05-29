@@ -35,4 +35,39 @@ export default class Panel extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../styles/variables.scss';
+
+#panel {
+  z-index: 1;
+  width: $tabs-width;
+  padding: 16px 8px;
+
+  .panel-container {
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+
+    .panel-names {
+      text-align: left;
+    }
+
+    .panel-values {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0 0 6px;
+      line-height: 1.35;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+</style>
