@@ -9,7 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "outDir": "./ts-build",
-    "lib": ["es6", "es5", "es2015.core", "es2015.promise", "dom"],
+    "lib": ["es6", "es5", "es2015.core", "es2015.promise", "es2017", "dom"],
     "types": ["node"],
     "paths": {
       "@/*": ["src/*"]
